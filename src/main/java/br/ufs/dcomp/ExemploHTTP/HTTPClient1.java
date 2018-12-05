@@ -12,19 +12,20 @@ import java.util.*;
  * @author Tarcisio Rocha (Prof. DCOMP/UFS)
  */
 public class HTTPClient1
-{
+{   
+    // HTTP é especificado em cima do TCP
     public static void main( String[] args ) throws Exception
     {
-        Socket sock = new Socket("www.ic.unicamp.br", 80);
+        Socket sock = new Socket("www.ic.unicamp.br", 80); // conexao TCP
         
         InputStream in = sock.getInputStream();
         OutputStream out = sock.getOutputStream();
 
         String CRLF = "\r\n";
-        
-        String msg = "GET / HTTP/1.1" + CRLF +
+                        // pode botar HEAD se quiser
+        String msg = "GET /~catto/ HTTP/1.1" + CRLF +
                      "Host: www.ic.unicamp.br" + CRLF +
-                     CRLF;
+                     CRLF; // mensagem de cabeçalho 
 
         // Envio da requisição HTTP             
         out.write(msg.getBytes());
@@ -42,7 +43,8 @@ public class HTTPClient1
                 line += c;
             } while (c != '\n');
             System.out.print(line);
-        } while (line.trim().length() > 0); // Finaliza quando a linha lida é de comprimento 0, indicando o fim do cabeçalho
-        //} while (true); // Forma incorreta (dirty), porém rápida, de exibir cabeçalho e conteúdo
+            /* trim tira todos os caracters especiais da linha */
+        //} while (line.trim().length() > 0); // Finaliza quando a linha lida é de comprimento 0, indicando o fim do cabeçalho
+        } while (true); // Forma incorreta (dirty), porém rápida, de exibir cabeçalho e conteúdo
     } 
 }
